@@ -3,7 +3,11 @@ const userAgent = require('user-agents');
 
 async function fetchProductList(url, searchTerm) {
     let startTime = Date.now();
-    const browser = await puppeteer.launch({ headless: true, defaultViewport: null });
+    const browser = await puppeteer.launch({ 
+		headless: true, 
+		defaultViewport: null , 
+		args: ['--no-sandbox', '--disable-setuid-sandbox']
+	});
     const page = await browser.newPage();
     await page.setUserAgent(userAgent.toString());
     await page.goto(url, { waitUntil: 'networkidle2' });
@@ -66,4 +70,4 @@ async function fetchProductList(url, searchTerm) {
     console.log('Time: ', (Date.now() - startTime) / 1000, 's');
 }
 
-fetchProductList('https://www.amazon.in', 'Shirts');
+fetchProductList('https://www.amazon.com', 'Java');
